@@ -1,14 +1,17 @@
-import express from "express";
-import mongoose from "mongoose";
-import routes from "./routes";
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import path from 'path';
+import routes from './routes';
 
 class App {
   constructor() {
     this.server = express();
 
-    const username = encodeURIComponent("c-uemura");
-    const password = encodeURIComponent("NG4GU14CmDQnmdFm");
-    const uri = `mongodb+srv://${username}:${password}@sandbox.vsvwd.mongodb.net/?retryWrites=true&w=majority`;
+    // const username = encodeURIComponent("c-uemura");
+    // const password = encodeURIComponent("NG4GU14CmDQnmdFm");
+    // const uri = `mongodb+srv://${username}:${password}@sandbox.vsvwd.mongodb.net/?retryWrites=true&w=majority`;
+    const uri = 'mongodb://user:pass@127.0.0.1:27017';
     mongoose.connect(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -19,8 +22,14 @@ class App {
   }
 
   middlewares() {
+    this.server.use(cors());
+    this.server.use(
+      '/files',
+      express.static(path.resolve(__dirname, '..', 'uploads'))
+    );
     this.server.use(express.json());
   }
+
   routes() {
     this.server.use(routes);
   }

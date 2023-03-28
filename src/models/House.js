@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 const HouseSchema = new Schema({
   thumbnail: String,
@@ -8,8 +8,8 @@ const HouseSchema = new Schema({
   status: Boolean,
   user: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
   },
 });
 
-export default model("House", HouseSchema);
+export default model('House', HouseSchema);

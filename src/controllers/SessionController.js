@@ -6,16 +6,25 @@ store: create session
 update: edit session
 destroy: remove session
 */
-import User from "../models/User";
+import * as yup from 'yup';
+import User from '../models/User';
 
 class SessionController {
-  store(req, res) {
-    const email = req.body;
+  async store(req, res) {
+    const schema = yup.object().shape({
+      email: yup.string().email().required(),
+    });
 
-    let user = User.findOne({ email });
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
+    const { email } = req.body;
+
+    let user = await User.findOne({ email });
 
     if (!user) {
-      user = User.create({ email });
+      user = await User.create({ email });
     }
 
     return res.json(user);
