@@ -8,9 +8,6 @@ class App {
   constructor() {
     this.server = express();
 
-    // const username = encodeURIComponent("c-uemura");
-    // const password = encodeURIComponent("NG4GU14CmDQnmdFm");
-    // const uri = `mongodb+srv://${username}:${password}@sandbox.vsvwd.mongodb.net/?retryWrites=true&w=majority`;
     const uri = 'mongodb://user:pass@127.0.0.1:27017';
     mongoose.connect(uri, {
       useNewUrlParser: true,
